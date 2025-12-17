@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Labb_3_Test  # your dedicated test DB
+    username: postgres
+    password: pass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop   # creates tables at start, drops at end
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect

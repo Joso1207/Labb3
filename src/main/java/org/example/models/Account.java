@@ -50,5 +50,9 @@ public class Account {
     public void setOwner_name(String owner_name) {
         this.owner_name = owner_name;
     }
+
+    public String printInfo(){
+        return "ID#"+id+" Name:"+owner_name+ " Balance:"+balance;
+    }
 }
 

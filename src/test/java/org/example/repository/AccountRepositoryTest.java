@@ -14,7 +14,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
 
 
+import javax.swing.text.html.Option;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,6 +34,7 @@ class AccountRepositoryTest {
     TestEntityManager entityManager;
 
 
+
     @Test
     void LoadContext(){
 
@@ -43,17 +46,42 @@ class AccountRepositoryTest {
         Account insertedAccount = repo.save(newAccount);
         assertEquals(entityManager.find(Account.class, insertedAccount.getId()), newAccount);
 
-        System.out.println(insertedAccount);
+        System.out.println(insertedAccount.printInfo());
 
     }
 
     @Test
     void FindByID(){
+        //Sequence still at nextid = 2  due to earlier test
+        Account newAccount1 = new Account("Big A",BigDecimal.valueOf(600.20));
+        Account newAccount2 = new Account("Big B",BigDecimal.valueOf(200.20));
+        Account newAccount3 = new Account("Big E",BigDecimal.valueOf(280.40));
+        repo.saveAll(List.of(newAccount1,newAccount2,newAccount3));
+        Optional<Account> fetchedAccount = repo.findById(4L);
+
+        assertTrue(fetchedAccount.isPresent());
+        assertEquals(fetchedAccount.get().getOwner_name(), newAccount3.getOwner_name());
+        System.out.println(fetchedAccount.get().printInfo());
 
     }
 
     @Test
     void updateAccount(){
+
+        Optional<Account> accountToUpdate = repo.findById(1L);
+        assertTrue(accountToUpdate.isPresent());
+
+        accountToUpdate.get().setOwner_name("Updated");
+        accountToUpdate.get().setBalance(BigDecimal.valueOf(200000.0));
+
+        Account updatedAcc = repo.save(accountToUpdate.get());
+        assertEquals(entityManager.find(Account.class,updatedAcc.getId()), accountToUpdate.get());
+
+
+
+
+
+
 
     }
 

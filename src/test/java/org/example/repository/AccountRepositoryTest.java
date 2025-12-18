@@ -77,16 +77,22 @@ class AccountRepositoryTest {
         Account updatedAcc = repo.save(accountToUpdate.get());
         assertEquals(entityManager.find(Account.class,updatedAcc.getId()), accountToUpdate.get());
 
-
-
-
-
-
-
     }
 
     @Test
     void updateBalance(){
+
+        Optional<Account> fetchedAccount = repo.findById(1L);
+        assertTrue(fetchedAccount.isPresent());
+        BigDecimal expectedBalance = fetchedAccount.get().getBalance();
+
+        repo.updateBalanceOnAccountWithID(1L,expectedBalance.add(BigDecimal.valueOf(2000)));
+        Account updatedAccount = entityManager.find(Account.class,1L);
+
+        assertEquals(expectedBalance,updatedAccount.getBalance());
+
+
+
 
     }
 

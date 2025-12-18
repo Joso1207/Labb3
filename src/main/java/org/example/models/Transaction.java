@@ -17,16 +17,51 @@ public class Transaction {
     @Column(nullable = false,precision = 10,scale = 2, columnDefinition = "NUMERIC(10,2) CHECK(amount>0)")
     private BigDecimal amount;
     @Column(nullable = false,columnDefinition = "VARCHAR(10) CHECK(status='SUCCESS' OR status='FAILED') DEFAULT 'SUCCESS'")
-    private String status;
+    private String status = "SUCCESS";
     @Column
     private String error_message;
-    @Column(nullable = false,columnDefinition = "DATE CHECK(created_at<=now())")
-    private Date created_at;
 
-    public Transaction(){}
+    @Column(nullable = false,columnDefinition = "DATE CHECK(created_at<=now()) DEFAULT now() ")
+    private Date created_at = Date.valueOf(LocalDate.now());
+
+    @ManyToOne
+    private Account toAccount;
+    @ManyToOne
+    private Account fromAccount;
+
+
+
+    public Long getID() {
+        return ID;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
+    }
+
+
+    public Account getToAccount() {
+        return toAccount;
+    }
+
+    public void setToAccount(Account toAccount) {
+        this.toAccount = toAccount;
+    }
+
+    public Account getFromAccount() {
+        return fromAccount;
+    }
+
+    public void setFromAccount(Account fromAccount) {
+        this.fromAccount = fromAccount;
+    }
+
+
+
+    public Transaction(){
+    }
     public Transaction(BigDecimal amount){
         this.amount = amount;
-        this.created_at = Date.valueOf(LocalDate.now());
     }
 
 

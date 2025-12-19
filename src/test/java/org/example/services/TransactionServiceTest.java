@@ -56,7 +56,7 @@ class TransactionServiceTest {
             //Ensure the correct AccountIDs and amount are in
         assertEquals(accounts.getFirst().getId(),fetchedTransaction.get().getFromAccount().getId());
         assertEquals(accounts.getLast().getId(),fetchedTransaction.get().getToAccount().getId());
-        assertEquals(BigDecimal.valueOf(200.00),fetchedTransaction.get().getAmount());
+        assertEquals(BigDecimal.valueOf(200.00).setScale(2),fetchedTransaction.get().getAmount());
     }
 
     @Test

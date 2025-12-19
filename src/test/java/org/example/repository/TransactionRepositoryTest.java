@@ -42,9 +42,8 @@ class TransactionRepositoryTest {
 
         Account acc1 = new Account("Account a", BigDecimal.valueOf(2.50));
         Account acc2 = new Account("Account b",BigDecimal.valueOf(3.20));
-        accountRepository.saveAll(List.of(acc1,acc2));
+        List<Account> accounts = accountRepository.saveAll(List.of(acc1,acc2));
 
-        List<Account> accounts = accountRepository.findAllById(List.of(1L,2L));
         Transaction newTransaction = new Transaction(
                 accounts.get(0),
                 accounts.get(1),
@@ -58,9 +57,10 @@ class TransactionRepositoryTest {
 
     @Test
     void shouldFindTransactionByIDAndIdentifyAccounts(){
+        Account acc1 = new Account("Account a", BigDecimal.valueOf(2.50));
+        Account acc2 = new Account("Account b",BigDecimal.valueOf(3.20));
+        List<Account> accounts = accountRepository.saveAll(List.of(acc1,acc2));
 
-
-        List<Account> accounts = accountRepository.findAllById(List.of(1L,2L));
         Transaction newTransaction = new Transaction(
                 accounts.get(0),
                 accounts.get(1),
